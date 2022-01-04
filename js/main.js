@@ -7,7 +7,6 @@ miForm.addEventListener("submit", validarForm);
 
 function validarForm(e) {
   e.preventDefault();
-  console.log(" miForm");
 }
 
 function addTarea() {
@@ -20,17 +19,29 @@ function addTarea() {
                   </button>
                 </ul>`;
   container.appendChild(NUEVA_TAREA);
-  console.log(" Nuevo Elemento Agregado "+ " " + NUEVA_TAREA);
-}/* 
+  console.log("Elemento html agregado");
+}
+
 btnSend.addEventListener("click", addTarea);
 function endTarea(event) {
   this.event.target.parentElement.parentElement.remove();
-} */
+  console.log("Elemento html eliminado");
+}
 
-let changeM = document.getElementById('btnModo');
-let theme = localStorage.getItem('bg');
 
-function chageBG() { 
-    var bodyM = document.body; 
-    bodyM.classList.toggle("bodyBlack"); 
-} 
+let data = localStorage.getItem("data");
+let bookData = data ? JSON.parse(data) : []
+
+document.getElementById('enter').addEventListener('click', addNewBook)
+
+function Book(Tarea, Fondo){
+  this.nvTarea = Tarea
+}
+
+function addNewBook() {
+  let book = new Book(nvTarea.value);
+  bookData.push(book);
+  localStorage.setItem('data', JSON.stringify(bookData));
+}
+
+console.log(localStorage);
