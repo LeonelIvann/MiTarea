@@ -1,38 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
-    <title>Document</title>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet"/>
+        <link rel="stylesheet"href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"crossorigin="anonymous"/>
+        <link rel="stylesheet" href="css/style.css">
+        <title>miTarea</title>
 </head>
 <body>
-    <!-- <div class="dark-mode">
-        <button id="cambiarModo" onclick="chageBG()" name="bg">MODO OSCURO / CLARO</button>
-    </div> -->
-    <main>
+    <div id="cover">
+        <span class="loading-ico">
+            <i class="fas fa-spinner"></i>
+        </span>
+        <p>
+            <button id="cargando">CARGANDO</button>
+            <button id="continuar">CONTINUAR</button>
+        </p>
+    </div>
+    <main class="mainX">
         <div class="title">
-            <h2>TAREAS<span class="underline-h2"></span></h2>
-            <p class="subtitle">CANTIDAD DE TAREAS QUÉ TIENES HOY : <span id="display-cant"></span> </p>
+            <h2>MiTAREAS</h2>
         </div>
-        <!-- formulario de nueva tarea -->
-        <div class="form">
-            <form id="formulario">
-			    <input id="userInput" type="text" placeholder="Hoy, debo asistir a la reunion de la facultad."  class="input-1" >
-                <button id="enter" class="btn-enter" type="submit">
-                    <span class="material-icons add-t" >add_circle</span>
-                </button>
-            </form>
-        </div>
-        <section class="container-list">
-            <table id="container-tbl">
-                <!-- elementos creados por js -->
-            </table>
-        </section>
+    <!-- formulario de nueva tarea -->
+    <div class="form">
+        <form id="formulario">
+            <input id="userInput" type="text" placeholder="Hoy, debo asistir a la reunion de la facultad." class="input-1">
+            <button id="enter" class="btn-enter" type="submit" >
+                <span class="material-icons add-t">add_circle</span>
+            </button>
+        </form>
+    </div>
+    <section class="container-list">
+        <table id="container-tbl">
+            <!-- elementos creados por js -->
+        </table>
+    </section>
     </main>
-    <h3 class="autor"> Alumno <span class="span-n"> Leonel Ivan Cardoso </span> </h3>
+    <h3 class="autor">Alumno
+        <span class="span-n">
+            <a href="https://www.linkedin.com/in/leonelivan/" target="blank">Leonel Ivan Cardoso</a>
+        </span>
+    </h3>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="js/preload.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>
