@@ -25,5 +25,5 @@ $("#continuar").click(function(event) {
             }, 0, function() {
             });
     });
-    console.log("DOM Listo para comenzar");
+    console.log("DOM Listo");
 });

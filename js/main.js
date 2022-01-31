@@ -21,20 +21,21 @@ function actualizarLista() {
 }
 
 function eliminarT(index) {
-  tareas.splice(index, 1);
-  actualizarLista();
+  /* var eliminado = tareas.splice(2, 0) */
+  tareas.splice(0, 1);
+  actualizarLista();  
 }
 
 function endTarea(event) {
   this.event.target.parentElement.parentElement.remove();
-  console.log("Elemento html eliminado");
+  console.log("¡Tarea terminada, felicidades!");
   actualizarLista();
   eliminarT();
 }
 
 function tareasPendientes() {
   let datos = JSON.parse(localStorage.getItem('tareas'));   
-  for(dato of datos) {
+  for(datos of datos) {
     const NUEVA_TAREA = document.createElement("tr"); 
   
     NUEVA_TAREA.innerHTML = 
@@ -42,7 +43,7 @@ function tareasPendientes() {
                     <li class="li"> <p id="nuevaTarea">${datos}</p> </li>
                     <button id="dataEnd" class="btn-enter" onClick="endTarea()">
                       <span class="material-icons chk-c" >✔️</span>
-                    </button>
+                    </input>
                   </ul>`;
     container.appendChild(NUEVA_TAREA);
   }
@@ -61,7 +62,7 @@ function addTarea() {  // Funcion y Evento 'onClick' para mostrar la nueva tarea
                   <li class="li"> <p id="nuevaTarea">${nvTarea.value}</p> </li>
                   <button id="dataEnd" class="btn-enter" onClick="endTarea()">
                     <span class="material-icons chk-c" >✔️</span>
-                  </button>
+                  </input>
                 </ul>`;
   container.appendChild(NUEVA_TAREA);
   addToLocalStorage();
@@ -72,7 +73,7 @@ function addTarea() {  // Funcion y Evento 'onClick' para mostrar la nueva tarea
 
 // Verificamos si tenemos elementos en el localStorage, si tenemos ejecuta la funcion tareasPendientes para mostrarla.
 function verificaLocalStorage() {
-    console.log("Cuentas con", localStorage.length + " " + "Tarea pendiente");
+    console.log("Cuentas con", tareas.length + " " + "Tarea pendiente");
     tareasPendientes();
 }
 
