@@ -3,12 +3,12 @@ const form = document.querySelector('#formulario');
 const listElem = document.querySelector('#container-tbl');
 const buttonElem = document.querySelector('#to-do-list button');
 
-const almacenamiento = JSON.parse(localStorage.getItem('Tareas')) || [];
+const almacenamiento = JSON.parse(localStorage.getItem('Tareas')) || [];  // LocalStorage de las tareas ingresadas
 
 function actualizarLista(){
   listElem.innerHTML = '';
 
-  for (const key in almacenamiento) {  // Creamos los elementos html
+  for (const key in almacenamiento) {  // Creamos el cuerpo html qué tendrá la tarea en el display (container-tbl)
     
     const tr = document.createElement('tr');
     const ul = document.createElement('ul');
@@ -37,7 +37,7 @@ function actualizarLista(){
 }
 
 function addToList(value){
-  if (value === '') return;
+  if (value === '') return;  // En caso de no haya un valor ingresado, hará el return sin agregar nada al localStorage y por ende al html
 
   almacenamiento.push(value);
 
@@ -46,8 +46,7 @@ function addToList(value){
   inputTexto.focus();
 }
 
-function eliminar(key){
-
+function eliminar(key){    
   almacenamiento.splice(Number(key),1);
 
   actualizarLista();
@@ -56,13 +55,13 @@ function eliminar(key){
 }
 
 
-form.addEventListener('submit', e => {
+form.addEventListener('submit', e => {  // preventDefault para el formulario, evitamos el refresco de la página  y ejecutamos la funcion de linea 60 > 39
   e.preventDefault();
   addToList(inputTexto.value);
   console.log("Tarea agregada");
 });
 
-document.addEventListener('click', e => {
+document.addEventListener('click', e => { // Evento para el button, para eliminar la tarea cuando se escuche el 'click', ejecuta la funcion linea 67 > 49
   const el = e.target;
   if (el.classList.contains('delete')){ 
     eliminar(el.getAttribute('key'));
@@ -74,7 +73,7 @@ function verCantidad(){
   localStorage.length()
 }
 
-window.onload = function () { // Verificamos si tenemos tareas pendientes para realizar
+window.onload = function () { // Verificamos si tenemos tareas pendientes para realizar a partir de la posicion 0, si no hay ejecuta el log de linea 81
   let cantStorage = localStorage
   if (cantStorage && Object.keys(cantStorage).length > 0) {
     console.log("Tienes", almacenamiento.length + " " + "elementos sin hacer");
