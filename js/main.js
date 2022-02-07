@@ -1,88 +1,86 @@
-let nvTarea = document.getElementById("userInput");
-let container = document.getElementById("container-tbl");
-let btnSend = document.getElementById("enter");
-let miForm = document.getElementById("formulario");
+const inputTexto = document.querySelector('#userInput');
+const form = document.querySelector('#formulario');
+const listElem = document.querySelector('#container-tbl');
+const buttonElem = document.querySelector('#to-do-list button');
 
-let tareas = JSON.parse(localStorage.getItem('tareas')) || [];  // Almacenamiento 
+const almacenamiento = JSON.parse(localStorage.getItem('Tareas')) || [];
 
-miForm.addEventListener("submit", validarForm);
+function actualizarLista(){
+  listElem.innerHTML = '';
 
-window.onload = function () {
-  var storageCantidad = JSON.parse(localStorage.getItem("tareas"));
-  if (storageCantidad && Object.keys(storageCantidad).length > false) {
-    verificaLocalStorage();
-  } else {
-    console.log("No hay tareas por hacer");
+  for (const key in almacenamiento) {  // Creamos los elementos html
+    
+    const tr = document.createElement('tr');
+    const ul = document.createElement('ul');
+    const li = document.createElement('li');
+    const p = document.createElement('p');
+    li.setAttribute("class","li")
+
+    const span = document.createElement('span');
+    span.setAttribute("class", "container-text")
+    p.innerText = almacenamiento[key];
+
+    const button = document.createElement('button');
+    button.innerText = '✔️';
+    button.setAttribute('key',key); 
+    button.classList.add('delete');
+
+    tr.appendChild(ul);
+    ul.appendChild(li);
+    ul.appendChild(button);
+    li.appendChild(p);
+    button.appendChild(span);
+    listElem.appendChild(tr);
   }
+
+  localStorage.setItem('Tareas',JSON.stringify(almacenamiento));
 }
 
-function actualizarLista() {
-  localStorage.setItem('tareas', JSON.stringify(tareas));
-}
+function addToList(value){
+  if (value === '') return;
 
-function eliminarT(index) {
-  /* var eliminado = tareas.splice(2, 0) */
-  tareas.splice(0, 1);
-  actualizarLista();  
-}
+  almacenamiento.push(value);
 
-function endTarea(event) {
-  this.event.target.parentElement.parentElement.remove();
-  console.log("¡Tarea terminada, felicidades!");
   actualizarLista();
-  eliminarT();
+  inputTexto.value = '';
+  inputTexto.focus();
 }
 
-function tareasPendientes() {
-  let datos = JSON.parse(localStorage.getItem('tareas'));   
-  for(datos of datos) {
-    const NUEVA_TAREA = document.createElement("tr"); 
-  
-    NUEVA_TAREA.innerHTML = 
-                  `<ul>
-                    <li class="li"> <p id="nuevaTarea">${datos}</p> </li>
-                    <button id="dataEnd" class="btn-enter" onClick="endTarea()">
-                      <span class="material-icons chk-c" >✔️</span>
-                    </input>
-                  </ul>`;
-    container.appendChild(NUEVA_TAREA);
-  }
-  actualizarLista()
-}
+function eliminar(key){
 
-let tareaIngresada = document.getElementById("userInput").value;
-function addToLocalStorage() {
-  tareas.push(nvTarea.value);
-}
+  almacenamiento.splice(Number(key),1);
 
-function addTarea() {  // Funcion y Evento 'onClick' para mostrar la nueva tarea en el html.
-  const NUEVA_TAREA = document.createElement("tr"); 
-  NUEVA_TAREA.innerHTML = 
-                `<ul>
-                  <li class="li"> <p id="nuevaTarea">${nvTarea.value}</p> </li>
-                  <button id="dataEnd" class="btn-enter" onClick="endTarea()">
-                    <span class="material-icons chk-c" >✔️</span>
-                  </input>
-                </ul>`;
-  container.appendChild(NUEVA_TAREA);
-  addToLocalStorage();
   actualizarLista();
+  inputTexto.value = '';
+  inputTexto.focus();
 }
 
 
+form.addEventListener('submit', e => {
+  e.preventDefault();
+  addToList(inputTexto.value);
+  console.log("Tarea agregada");
+});
 
-// Verificamos si tenemos elementos en el localStorage, si tenemos ejecuta la funcion tareasPendientes para mostrarla.
-function verificaLocalStorage() {
-    console.log("Cuentas con", tareas.length + " " + "Tarea pendiente");
-    tareasPendientes();
-}
-
-function validarForm(e) {   // Evitamos el refresh del formulario y con un if verificamos qué el input tiene un dato ingresado
-  e.preventDefault();       // Si no tiene datos, arrojará un alert.
-  if(nvTarea.value === ''){
-    console.log("¡No hay tareas ingresada, prueba escribiendo algo!");
-    alert("¡Siempre hay algo para hacer, intenta agregando una tarea!");
-  } else {
-    addTarea();             // Si hay datos, ejecutará la función addTarea.
+document.addEventListener('click', e => {
+  const el = e.target;
+  if (el.classList.contains('delete')){ 
+    eliminar(el.getAttribute('key'));
+    console.log("Tarea eliminada");
   }
+});
+
+function verCantidad(){
+  localStorage.length()
 }
+
+window.onload = function () { // Verificamos si tenemos tareas pendientes para realizar
+  let cantStorage = localStorage
+  if (cantStorage && Object.keys(cantStorage).length > 0) {
+    console.log("Tienes", almacenamiento.length + " " + "elementos sin hacer");
+  } else {
+    console.log("Siempre hay algo para hacer!")
+  }
+};
+
+actualizarLista();
